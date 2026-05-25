@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Методический портал кураторов | Университетский колледж ОГУ</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-image: url('https://avatars.mds.yandex.net/i?id=cb8b21b8a46a604f5ae7096e6481fdcad1ffd8c3-5858006-images-thumbs&n=13');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-color: #f5efe7;
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, 'Roboto', sans-serif;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(245, 240, 235, 0.75), rgba(240, 235, 225, 0.8));
+            backdrop-filter: blur(3px);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .soft-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.2;
+            pointer-events: none;
+            z-index: -2;
+        }
+        .blob-left { width: 550px; height: 550px; background: #f2e4d6; top: -10%; left: -15%; }
+        .blob-right { width: 600px; height: 600px; background: #d9e2ec; bottom: -15%; right: -20%; }
+
+        .header-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            z-index: 30;
+            animation: fadeSlideDown 0.7s ease-out;
+        }
+
+        .anchor-menu {
+            background: rgba(250, 242, 232, 0.92);
+            backdrop-filter: blur(12px);
+            border-radius: 0 0 48px 48px;
+            padding: 14px 44px;
+            font-size: 26px;
+            font-weight: 800;
+            text-align: center;
+            border: 1px solid rgba(170, 145, 125, 0.4);
+            border-top: none;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            transition: 0.25s;
+        }
+        .anchor-menu:hover { background: rgba(255, 250, 242, 0.98); transform: translateY(2px); }
+        .anchor-menu a {
+            text-decoration: none;
+            background: linear-gradient(125deg, #000000, #2b2b2b, #1a1a1a, #000000);
+            background-size: 250% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            font-weight: 800;
+            letter-spacing: 1px;
+            animation: softShine 5s ease infinite;
+        }
+        @keyframes softShine {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .main-content {
+            margin-top: 210px;
+            text-align: center;
+            position: relative;
+            z-index: 20;
+            animation: fadeSlideUp 0.7s ease-out 0.1s backwards;
+        }
+        .main-title {
+            background: rgba(250, 240, 228, 0.88);
+            backdrop-filter: blur(6px);
+            border-radius: 60px;
+            border: 1px solid rgba(140, 115, 95, 0.3);
+            display: inline-block;
+            padding: 12px 36px;
+            font-size: 56px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: linear-gradient(125deg, #0a0a0a, #2a2a2a, #1c1c1c, #0f0f0f);
+            background-size: 300% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: shimmer 6s ease infinite;
+            box-shadow: none;
+        }
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .under-wrapper {
+            text-align: center;
+            width: 100%;
+            margin-top: 28px;
+            animation: fadeSlideUp 0.7s ease-out 0.2s backwards;
+        }
+        .under {
+            background: rgba(250, 240, 228, 0.88);
+            backdrop-filter: blur(6px);
+            display: inline-block;
+            padding: 12px 36px;
+            border-radius: 60px;
+            font-size: 22px;
+            font-weight: 600;
+            border: 1px solid rgba(140, 115, 95, 0.3);
+        }
+        .under p {
+            background: linear-gradient(125deg, #000000, #2e2e2e, #1a1a1a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            font-weight: 800;
+            background-size: 200% auto;
+            animation: softFlow 5s ease infinite;
+        }
+        @keyframes softFlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        .methods-section {
+            width: 100%;
+            max-width: 1400px;
+            margin: 380px auto 450px auto;
+            padding: 55px 35px;
+            text-align: center;
+            background: rgba(250, 242, 232, 0.82);
+            backdrop-filter: blur(14px);
+            border-radius: 70px;
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.1);
+        }
+
+        .category {
+            margin-bottom: 70px;
+        }
+        .category h3 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            padding-bottom: 12px;
+            display: inline-block;
+            border-bottom: 3px solid #cfb89d;
+            color: #1f2a2e;
+            letter-spacing: 1px;
+        }
+        .methods-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+        }
+        .method-card {
+            background: rgba(255, 255, 252, 0.94);
+            border-radius: 48px;
+            padding: 32px 24px;
+            width: 320px;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.4, 1);
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e6d6c4;
+            text-align: left;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.2), transform 0.6s ease, box-shadow 0.2s;
+            position: relative;
+        }
+        .method-card:hover {
+            transform: translateY(-8px);
+            background: #ffffff;
+            box-shadow: 0 22px 32px -14px rgba(0, 0, 0, 0.2);
+            border-color: #d6bd9f;
+        }
+        .method-card .card-icon {
+            font-size: 52px;
+            margin-bottom: 18px;
+            display: inline-block;
+        }
+        .method-card h4 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #1f2a2e;
+        }
+        .method-card p {
+            font-size: 15px;
+            color: #2f3f44;
+            font-weight: 500;
+            line-height: 1.4;
+            margin-bottom: 16px;
+        }
+        .file-link {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 13px;
+            background: #e9dfd3;
+            padding: 6px 14px;
+            border-radius: 40px;
+            text-decoration: none;
+            color: #2a4b5c;
+            font-weight: 600;
+            transition: 0.2s;
+            pointer-events: auto;
+        }
+        .file-link:hover {
+            background: #d6bd9f;
+            color: white;
+        }
+        .method-card.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeSlideDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 1100px) {
+            .methods-section { margin: 300px 25px 350px 25px; padding: 45px 25px; }
+            .main-title { font-size: 46px; padding: 10px 28px; }
+            .anchor-menu { padding: 12px 32px; font-size: 22px; }
+            .category h3 { font-size: 30px; }
+            .method-card { width: 280px; padding: 24px 18px; }
+        }
+        @media (max-width: 800px) {
+            .main-content { margin-top: 150px; }
+            .main-title { font-size: 34px; padding: 8px 20px; }
+            .under { font-size: 18px; padding: 8px 24px; }
+            .method-card { width: 100%; max-width: 340px; }
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #e6d8ca; border-radius: 12px; }
+        ::-webkit-scrollbar-thumb { background: #bfa480; border-radius: 12px; }
+    </style>
+</head>
+<body>
+<div class="soft-blob blob-left"></div>
+<div class="soft-blob blob-right"></div>
+
+<div class="header-wrapper">
+    <div class="anchor-menu">
+        <a href="#methods">📘 Методические материалы</a>
+    </div>
+</div>
+
+<main class="main-content">
+    <h1 class="main-title">САЙТ ДЛЯ КУРАТОРОВ</h1>
+</main>
+
+<div class="under-wrapper">
+    <div class="under"><p>Университетского колледжа ОГУ имени В. А. Бондаренко</p></div>
+</div>
+
+<section id="methods" class="methods-section">
+    <div class="category">
+        <h3>📊 Презентации (правовое воспитание)</h3>
+        <div class="methods-grid" id="presentations-grid"></div>
+    </div>
+    <div class="category">
+        <h3>🛡️ Памятки по безопасности</h3>
+        <div class="methods-grid" id="safety-grid"></div>
+    </div>
+    <div class="category">
+        <h3>📋 Инструктажи и реестры (с сохранением в Excel)</h3>
+        <div class="methods-grid" id="registers-grid"></div>
+    </div>
+</section>
+
+<script>
+    // ==================== УТИЛИТЫ ДЛЯ ОТКРЫТИЯ МАТЕРИАЛОВ ====================
+    function openInNewTab(content, filename, mimeType = 'text/html') {
+        const blob = new Blob([content], { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        const win = window.open(url, '_blank');
+        if (win) {
+            win.focus();
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+        } else {
+            alert('Разрешите всплывающие окна для открытия материалов');
+        }
+    }
+
+    function makeHtmlPage(title, bodyHtml) {
+        return `<!DOCTYPE html>
+        <html>
+        <head><meta charset="UTF-8"><title>${title}</title>
+        <style>
+            body { font-family: 'Segoe UI', system-ui, sans-serif; margin: 2rem; background: #fefaf5; color: #1f2a2e; }
+            .container { max-width: 1200px; margin: 0 auto; background: white; padding: 2rem; border-radius: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+            h1 { color: #2a4b5c; border-left: 5px solid #d6bd9f; padding-left: 1.2rem; }
+            h2, h3 { margin-top: 1.5rem; color: #3a5e6b; }
+            table { width: 100%; border-collapse: collapse; margin: 1rem 0; background: #fff; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: top; }
+            th { background: #f4ede5; }
+            ul, ol { margin: 1rem 0 1rem 1.8rem; }
+            .footer { margin-top: 2rem; font-size: 0.8rem; text-align: center; color: #7b6e5d; border-top: 1px solid #e6d6c4; padding-top: 1rem; }
+            .slide { margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem; }
+        </style>
+        </head>
+        <body><div class="container"><h1>${title}</h1>${bodyHtml}<div class="footer">Университетский колледж ОГУ им. В.А. Бондаренко</div></div></body>
+        </html>`;
+    }
+
+    // Функция для скачивания файла-заглушки .pptx
+    function downloadPptx(filename, title) {
+        const content = `Этот файл является заглушкой. Оригинальная презентация "${title}" доступна в формате HTML на методическом портале. Для просмотра содержимого откройте HTML-версию презентации.`;
+        const blob = new Blob([content], { type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    // === ПРЕЗЕНТАЦИИ (HTML-версии и ссылки на файлы) ===
+    function getCurfewPresentationHtml() {
+        return `<h2>Комендантский час для несовершеннолетних</h2>
+        <div class="slide"><h3>Определение</h3><p>Комендантский час — запрет на нахождение на улицах и в общественных местах в определённое время суток лицами без разрешения, с целью поддержания порядка. ФЗ №124 «Об основных гарантиях прав ребёнка в РФ» (поправки от 29.04.2009) ограничивает пребывание несовершеннолетних в ночное время.</p></div>
+        <div class="slide"><h3>Требования закона</h3><ul><li>Дети до 7 лет — только в сопровождении взрослых в любых общественных местах.</li><li>Лица до 18 лет не могут находиться в местах реализации алкоголя без старших.</li><li>Региональные власти устанавливают временные рамки (обычно с 23:00 до 6:00, летом с 22:00).</li></ul></div>
+        <div class="slide"><h3>Ответственность</h3><ul><li>На несовершеннолетнего от 16 лет — штраф 100–500 руб.</li><li>На родителей — штраф до 2000 руб., возможно предупреждение.</li><li>Юридические лица: штраф от 10 000 до 50 000 руб.</li><li>При тяжких последствиях — лишение родительских прав, уголовная ответственность.</li></ul></div>
+        <div class="slide"><h3>Кто может быть сопровождающим?</h3><p>Родители, опекуны, попечители, сотрудники школ/колледжей, представители органов опеки, соцслужб, организаторы выездных мероприятий.</p></div>`;
+    }
+    function getFalseReportPresentationHtml() {
+        return `<h2>Ответственность за заведомо ложное сообщение об акте терроризма</h2>
+        <div class="slide"><h3>Понятие</h3><p>Заведомо ложное сообщение о взрыве, поджоге или иных действиях, создающих опасность гибели людей, — уголовно наказуемое деяние. Терроризм (от лат. terror — страх).</p></div>
+        <div class="slide"><h3>Общественная опасность</h3><ul><li>Нарушает нормальную деятельность учреждений, транспорта.</li><li>Отвлекает силы полиции, МЧС, скорой помощи.</li><li>Вызывает панику, материальный ущерб (крупный — >1 млн руб.).</li></ul></div>
+        <div class="slide"><h3>Наказание по ст.207 УК РФ (общие положения)</h3><p>Штраф до 200 000 руб., обязательные/исправительные работы, ограничение/лишение свободы до 3 лет. Ответственность с 14 лет.</p></div>`;
+    }
+    function getArticle207FullHtml() {
+        return `<h2>Статья 207 Уголовного кодекса РФ</h2>
+        <div class="slide"><h3>Часть 1</h3><p>Заведомо ложное сообщение из хулиганских побуждений: штраф 200–500 тыс. руб. или в размере дохода за 1-18 мес., ограничение свободы до 3 лет, принудительные работы 2-3 года.</p></div>
+        <div class="slide"><h3>Часть 2</h3><p>В отношении объектов социальной инфраструктуры либо крупный ущерб: штраф 500–700 тыс. руб. или доход за 1-2 года, лишение свободы от 3 до 5 лет.</p></div>
+        <div class="slide"><h3>Часть 3</h3><p>Цель дестабилизации деятельности органов власти: штраф 700 тыс. – 1 млн руб. или доход за 1-3 года, лишение свободы от 6 до 8 лет.</p></div>
+        <div class="slide"><h3>Часть 4</h3><p>Повлекшие по неосторожности смерть человека или иные тяжкие последствия: штраф 1,5–2 млн руб. или доход за 2-3 года, лишение свободы от 8 до 10 лет.</p></div>
+        <div class="slide"><h3>Важно!</h3><p>Сообщая ложную информацию, вы отвлекаете экстренные службы от реальной помощи. Преступление с 14 лет.</p></div>`;
+    }
+    function getDangerFalseHtml() {
+        return `<h2>Чем опасно заведомо ложное сообщение об акте терроризма?</h2>
+        <div class="slide"><p>Ложное сообщение — не шалость, а преступление (ст.207 УК РФ). Оно создаёт экстремальную ситуацию, отвлекает силы МВД, МЧС, ФСБ, РЖД, нарушает жизнь людей.</p></div>
+        <div class="slide"><h3>Психологические последствия</h3><p>Ассоциируется с терроризмом, вызывает страх, панику, ощущение беззащитности.</p></div>
+        <div class="slide"><h3>Материальный ущерб</h3><p>Эвакуация, простой транспорта, работа спецслужб — миллионы рублей убытков. Ответственность: крупный штраф или лишение свободы до 10 лет (при тяжких последствиях).</p></div>
+        <div class="slide"><p><strong>Помните:</strong> «безобидное» хулиганство может сломать жизнь и вам, и другим людям.</p></div>`;
+    }
+    
+    // ==================== ПАМЯТКИ (БЕЗОПАСНОСТЬ) ====================
+    function getDroneMemoFullHtml() {
+        return `<h2>ПАМЯТКА НАСЕЛЕНИЮ ПРИ ОБНАРУЖЕНИИ БЕСПИЛОТНОГО ЛЕТАТЕЛЬНОГО АППАРАТА (БПЛА)</h2>
+        <p><strong>БПЛА представляют потенциальную угрозу безопасности мирных граждан.</strong> Отличительные черты: отсутствие пилота на борту. Конструкция: самолёт, квадрокоптер, зоофоб (птица/насекомое).</p>
+        <h3>Признаки нахождения БПЛА в воздухе:</h3>
+        <ul><li>Видите силуэт или мигающий огонёк на высоте 30–100 м.</li><li>Слышите жужжание или звук, похожий на газонокосилку/мопед.</li></ul>
+        <h3>Действия при обнаружении летящего БПЛА:</h3>
+        <ul><li>Не паникуйте, предупредите окружающих.</li><li>Обеспечьте безопасность (пригните голову).</li><li>На улице: найдите укрытие (здание без окон, за деревьями).</li><li>В здании: отойдите от окон, не пользуйтесь лифтом.</li><li>В автомобиле: остановитесь, покиньте машину, укройтесь.</li></ul>
+        <h3>КАТЕГОРИЧЕСКИ ЗАПРЕЩАЕТСЯ:</h3>
+        <ul><li>Находиться в прямой видимости БПЛА.</li><li>Вести фото-видеосъёмку БПЛА.</li><li>Пытаться сбить подручными средствами.</li><li>Трогать, вскрывать или перемещать упавший БПЛА (может быть заминирован).</li><li>Распространять фото/видео БПЛА в соцсетях.</li></ul>
+        <p><strong>Сообщите об обнаружении по номеру 112</strong> (время, место, курс, особенности, ФИО).</p>`;
+    }
+    function getSessionMemoHtml() {
+        return `<h2>Памятка: подготовка обучающихся и родителей к сессии</h2>
+        <h3>Куратору учебной группы:</h3>
+        <ul><li>Проинформировать о расписании зачётной и экзаменационной сессии.</li><li>При трудностях — организовать родительское собрание с преподавателями.</li><li>Выяснить, кому нужна дополнительная помощь.</li></ul>
+        <h3>Рекомендации для обучающихся:</h3>
+        <p><strong>I этап. Заблаговременная подготовка:</strong> составить список экзаменов, собрать материалы, предварительное планирование.</p>
+        <p><strong>II этап. Активная подготовка:</strong> план изучения тем, активная работа с информацией (выписки), работа в группе.</p>
+        <p><strong>III этап. Перед экзаменом:</strong> повторение, сбор вещей (зачётка, ручки, деловой стиль), выспаться.</p>
+        <p><strong>IV этап. На экзамене:</strong> читать вопросы внимательно, распределить время, писать структурированно.</p>
+        <h3>Рекомендации для родителей:</h3>
+        <ul><li>Эмоциональная поддержка: не запугивать, нормализовать ситуацию, снижать стресс.</li><li>Организационная помощь: комфортное пространство, освободить от части обязанностей, следить за режимом и питанием.</li><li>Чего не стоит: сравнивать, сидеть «над душой», требовать идеальных оценок.</li><li>В день экзамена: разбудить, пожелать удачи, не отправлять сообщения во время экзамена.</li></ul>
+        <p>По вопросам обращаться к куратору учебной группы. Удачи на сессии!</p>`;
+    }
+    
+    // ==================== РЕЕСТР ИНСТРУКТАЖА (ИЗ ФАЙЛА Инструктаж.doc) ====================
+    function getInstructionRegisterFromDoc() {
+        const columns = [
+            "№ п/п",
+            "Фамилия, имя, отчество инструктируемого",
+            "Правила поведения на воде, в лесу",
+            "Правила поведения при атаке БПЛА",
+            "ПДД, правила катания на самокатах",
+            "ФЗ №124-ФЗ (о комендантском часе)",
+            "Правила поведения в общественных местах",
+            "Правила пожарной безопасности",
+            "Правила перехода через ж/д пути"
+        ];
+        const rowsCount = 26;
+        let html = `<h2>Инструктаж обучающихся учебной группы 23ПЛ-1 (2026 г.)</h2>
+        <p><strong>Куратор учебной группы 23ПЛ-1 Е.С. Кутищева</strong> — внесите ФИО и отметки о прохождении инструктажа в соответствующих колонках. Ячейки с темами редактируемые. Первая строка уже содержит фамилию из образца.</p>
+        <div style="overflow-x: auto;">
+            <table id="editableInstructionTable" style="width:100%; border-collapse: collapse; background:white;">
+                <thead><tr>`;
+        columns.forEach(col => {
+            html += `<th style="border:1px solid #aaa; padding: 10px; background:#f0e8df; text-align:center;">${col}</th>`;
+        });
+        html += `</thead><tbody>`;
+        for (let i = 0; i < rowsCount; i++) {
+            html += `<tr>`;
+            html += `<td style="border:1px solid #ccc; padding: 8px; text-align:center;">${i+1}</td>`;
+            for (let j = 1; j < columns.length; j++) {
+                if (i === 0 && j === 1) {
+                    html += `<td contenteditable="true" style="border:1px solid #ccc; padding: 8px; min-width: 140px;">Иванов Максим Витальевич</td>`;
+                } else {
+                    html += `<td contenteditable="true" style="border:1px solid #ccc; padding: 8px; min-width: 120px;" title="Кликните для редактирования"></td>`;
+                }
+            }
+            html += `</tr>`;
+        }
+        html += `</tbody>
+            </table>
+        </div>
+        <br>
+        <div style="display: flex; gap: 15px; justify-content: center; margin: 1rem 0;">
+            <button id="saveInstructionExcelBtn" style="background:#2a7f6e; color:white; border:none; padding: 10px 24px; border-radius: 40px; cursor:pointer; font-weight:bold;">📥 Сохранить как Excel (инструктаж 23ПЛ-1)</button>
+            <button id="clearInstructionBtn" style="background:#c0a080; color:white; border:none; padding: 10px 24px; border-radius: 40px; cursor:pointer; font-weight:bold;">🗑 Очистить все редактируемые ячейки</button>
+        </div>
+        <p style="font-size:0.9rem;">* Для заполнения реестра кликайте на ячейки и вносите данные (например, подпись/дата). Сохраните файл на компьютер через кнопку Excel.</p>`;
+        const script = `<script>
+            (function() {
+                const table = document.getElementById('editableInstructionTable');
+                const saveBtn = document.getElementById('saveInstructionExcelBtn');
+                const clearBtn = document.getElementById('clearInstructionBtn');
+                function exportExcel() {
+                    let exportHtml = '<html><head><meta charset="UTF-8"><title>Инструктаж_23ПЛ-1</title></head><body>' + table.outerHTML + '</body></html>';
+                    const blob = new Blob([exportHtml], { type: 'application/vnd.ms-excel' });
+                    const a = document.createElement('a');
+                    const url = URL.createObjectURL(blob);
+                    a.href = url;
+                    a.download = 'instruktazh_23PL-1.xls';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }
+                function clearCells() {
+                    const tbody = table.tBodies[0];
+                    for (let row of tbody.rows) {
+                        for (let i = 1; i < row.cells.length; i++) {
+                            row.cells[i].innerText = '';
+                        }
+                    }
+                    if (tbody.rows[0] && tbody.rows[0].cells[1]) tbody.rows[0].cells[1].innerText = 'Иванов Максим Витальевич';
+                }
+                saveBtn.addEventListener('click', exportExcel);
+                clearBtn.addEventListener('click', clearCells);
+            })();
+        <\/script>`;
+        return makeHtmlPage("Инструктаж обучающихся учебной группы 23ПЛ-1", html + script);
+    }
+    
+    function getDroneRegisterInteractive() {
+        const columns = ["№ п/п", "Фамилия, имя, отчество инструктируемого", "Подпись о прохождении инструктажа"];
+        let html = `<h2>Инструктаж при опасности атаки беспилотных летательных аппаратов (БПЛА)</h2>
+        <p><strong>Группа 23ПЛ-1, дата: ___ .12.2025 г. Куратор Е.С. Кутищева</strong> — заполните ФИО и подписи. Сохраните в Excel.</p>
+        <div style="overflow-x: auto;"><table id="droneTable" style="width:100%; border-collapse: collapse;"><thead><tr>`;
+        columns.forEach(col => { html += `<th style="border:1px solid #aaa; padding:10px; background:#f0e8df;">${col}</th>`; });
+        html += `</thead><tbody>`;
+        for (let i = 0; i < 30; i++) {
+            html += `<tr><td style="border:1px solid #ccc; text-align:center;">${i+1}</td>`;
+            for (let j = 1; j < columns.length; j++) html += `<td contenteditable="true" style="border:1px solid #ccc; padding:8px;"></td>`;
+            html += `</tr>`;
+        }
+        html += `</tbody></table></div>
+        <div style="display:flex; gap:15px; justify-content:center; margin:1rem 0;">
+            <button id="saveDroneExcelBtn" style="background:#2a7f6e; color:white; border:none; padding:10px 24px; border-radius:40px;">📥 Сохранить как Excel (БПЛА)</button>
+            <button id="clearDroneBtn" style="background:#c0a080; color:white; border:none; padding:10px 24px; border-radius:40px;">🗑 Очистить</button>
+        </div>`;
+        const script = `<script>
+            (function(){
+                const tbl = document.getElementById('droneTable');
+                const save = document.getElementById('saveDroneExcelBtn');
+                const clear = document.getElementById('clearDroneBtn');
+                save.onclick = ()=>{
+                    const blob = new Blob(['<html><meta charset="UTF-8"><body>'+tbl.outerHTML+'</body></html>'], {type:'application/vnd.ms-excel'});
+                    const a=document.createElement('a');
+                    a.href=URL.createObjectURL(blob);
+                    a.download='instruktazh_BPLA.xls';
+                    a.click();
+                    URL.revokeObjectURL(a.href);
+                };
+                clear.onclick = ()=>{
+                    for(let row of tbl.tBodies[0].rows)
+                        for(let i=1;i<row.cells.length;i++) row.cells[i].innerText='';
+                };
+            })();
+        <\/script>`;
+        return makeHtmlPage("Инструктаж по БПЛА", html + script);
+    }
+    
+    // ============ ПОСТРОЕНИЕ КАРТОЧЕК С ДОБАВЛЕНИЕМ ССЫЛОК НА ФАЙЛЫ ============
+    function createPresentationCard(item) {
+        const card = document.createElement('div');
+        card.className = 'method-card';
+        card.innerHTML = `
+            <div class="card-icon">${item.icon}</div>
+            <h4>${item.title}</h4>
+            <p>${item.desc}</p>
+            <a class="file-link" id="download-${item.id}" style="cursor:pointer;">📎 Скачать презентацию (.pptx)</a>
+        `;
+        // Клик по карточке (но не по ссылке) — открыть HTML-версию
+        card.addEventListener('click', (e) => {
+            if (e.target.classList.contains('file-link')) return;
+            openInNewTab(makeHtmlPage(item.title, item.presentationHtml()), item.title+'.html');
+        });
+        // Отдельная обработка ссылки на файл
+        const downloadLink = card.querySelector(`#download-${item.id}`);
+        downloadLink.addEventListener('click', (e) => {
+            e.stopPropagation();
+            downloadPptx(item.filename, item.title);
+        });
+        return card;
+    }
+    
+    function createSimpleCard(item) {
+        const card = document.createElement('div');
+        card.className = 'method-card';
+        card.innerHTML = `<div class="card-icon">${item.icon}</div><h4>${item.title}</h4><p>${item.desc}</p>`;
+        card.addEventListener('click', () => {
+            if (item.contentHtmlFunc) openInNewTab(makeHtmlPage(item.title, item.contentHtmlFunc()), item.title+'.html');
+            else if (item.registerFunc) openInNewTab(item.registerFunc(), item.title+'.html');
+        });
+        return card;
+    }
+    
+    // Данные презентаций с именами файлов для скачивания
+    const presentations = [
+        { id: "curfew", icon: "🌙", title: "Комендантский час", desc: "ФЗ №124, запреты, штрафы (презентация)", presentationHtml: getCurfewPresentationHtml, filename: "Komendantskiy_chas.pptx" },
+        { id: "false_report", icon: "⚠️", title: "Ответственность за ложное сообщение", desc: "Ст.207 УК РФ, общественная опасность", presentationHtml: getFalseReportPresentationHtml, filename: "Otvetstvennost_za_lozhnoe_soobshchenie.ppt" },
+        { id: "article207", icon: "⚖️", title: "Ст. 207 УК РФ (полный разбор)", desc: "Части 1-4, размеры наказаний", presentationHtml: getArticle207FullHtml, filename: "Prezentatsiya_po_st_207_UK_RF.pptx" },
+        { id: "danger_false", icon: "💣", title: "Чем опасно ложное сообщение", desc: "Последствия «телефонного терроризма»", presentationHtml: getDangerFalseHtml, filename: "Chem_opasno_lozhnoe_soobshchenie.ppt" }
+    ];
+    
+    const safetyCardsList = [
+        { icon: "🚁", title: "Памятка при обнаружении БПЛА", desc: "Действия, запреты, номер 112", contentHtmlFunc: getDroneMemoFullHtml },
+        { icon: "📚", title: "Подготовка к сессии", desc: "Памятка кураторам, студентам, родителям", contentHtmlFunc: getSessionMemoHtml }
+    ];
+    
+    const registersCards = [
+        { icon: "📋", title: "Инструктаж обучающихся учебной группы 23ПЛ-1", desc: "26 строк, 8 тем (вода/лес, БПЛА, ПДД, комендантский час, общественные места, пожарная, ЖД пути) — редактируемый Excel", registerFunc: getInstructionRegisterFromDoc },
+        { icon: "📄", title: "Реестр инструктажа по БПЛА", desc: "30 человек, подпись — сохранение в Excel", registerFunc: getDroneRegisterInteractive }
+    ];
+    
+    const presGrid = document.getElementById('presentations-grid');
+    const safetyGrid = document.getElementById('safety-grid');
+    const regGrid = document.getElementById('registers-grid');
+    
+    presentations.forEach(p => presGrid.appendChild(createPresentationCard(p)));
+    safetyCardsList.forEach(s => safetyGrid.appendChild(createSimpleCard(s)));
+    registersCards.forEach(r => regGrid.appendChild(createSimpleCard(r)));
+    
+    // Анимация появления при скролле
+    function isElementInViewport(el, offset = 80) {
+        const rect = el.getBoundingClientRect();
+        const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+        return rect.top < windowHeight - offset && rect.bottom > offset;
+    }
+    function updateAnimations() {
+        document.querySelectorAll('.method-card').forEach(card => {
+            const visible = isElementInViewport(card, 90);
+            if (visible && !card.classList.contains('animate-in')) card.classList.add('animate-in');
+            else if (!visible && card.classList.contains('animate-in')) card.classList.remove('animate-in');
+        });
+    }
+    window.addEventListener('scroll', updateAnimations);
+    window.addEventListener('resize', updateAnimations);
+    setTimeout(updateAnimations, 100);
+    updateAnimations();
+</script>
+</body>
+</html>
